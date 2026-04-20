@@ -946,25 +946,216 @@
   .two-col { animation: fadeUp 0.6s 0.2s ease both; }
 
   /* ─── RESPONSIVE ─── */
-  @media (max-width: 720px) {
-    .two-col { grid-template-columns: 1fr; }
-    .stats-bar { grid-template-columns: repeat(2, 1fr); }
-    .includes-grid { grid-template-columns: 1fr; }
-    .sidebar-sticky { position: static; }
-    .hero-content { padding: 28px 24px; }
-    nav { flex-wrap: wrap; gap: 12px; }
+
+  /* Floating mobile CTA bar */
+  .mobile-cta-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 12px 16px;
+    background: rgba(8,10,8,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border-2);
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  @media (max-width: 480px) {
+  .mobile-cta-price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-cta-price .price-orig {
+    font-size: 10px;
+    color: var(--text-3);
+    text-decoration: line-through;
+  }
+
+  .mobile-cta-price .price-main {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+
+  .mobile-cta-price .price-sub {
+    font-size: 10px;
+    color: var(--text-3);
+  }
+
+  .mobile-cta-bar .btn-enroll {
+    flex: 1;
+    max-width: 220px;
+    padding: 13px 16px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    /* Show floating CTA bar */
+    .mobile-cta-bar { display: flex; }
+
+    /* Add bottom padding so content isn't hidden behind bar */
+    .page-wrap { padding-bottom: 100px; }
+
+    /* Nav — compact */
+    nav {
+      flex-wrap: nowrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 14px 0 0;
+    }
+
+    .nav-badge { display: none; }
+
+    .nav-right { gap: 8px; }
+
+    .btn-primary {
+      padding: 8px 14px;
+      font-size: 12px;
+    }
+
+    /* Promo banner */
+    .code-banner {
+      padding: 12px 14px;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .code-value { font-size: 14px; }
+    .code-saving strong { font-size: 15px; }
+
+    /* Hero */
+    .hero {
+      border-radius: 14px;
+      min-height: 300px;
+      margin-bottom: 16px;
+    }
+
+    .hero-content {
+      padding: 24px 20px 22px;
+    }
+
+    .hero-title {
+      font-size: clamp(24px, 7vw, 34px);
+      letter-spacing: -1px;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .hero-cta-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .btn-hero {
+      width: 100%;
+      justify-content: center;
+      padding: 14px 20px;
+    }
+
+    .hero-price { font-size: 12px; }
+
+    /* Stats bar — 2 columns */
+    .stats-bar {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .stat-item { padding: 14px 14px; }
+    .stat-val { font-size: 22px; }
+    .stat-label { font-size: 11px; }
+
+    /* Two-col → single col, sidebar moves below */
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    /* Sidebar: not sticky on mobile, appears below content */
+    .sidebar-sticky {
+      position: static;
+      margin-top: 16px;
+    }
+
+    /* Hide the desktop price card on mobile (we use floating bar instead) */
+    .price-card { display: none; }
+
+    /* Sections */
+    .section {
+      padding: 18px 16px;
+      margin-bottom: 12px;
+    }
+
+    .section-title { font-size: 14px; }
+
+    /* Module rows — tighter on mobile */
+    .module-row {
+      padding: 12px 12px;
+      gap: 10px;
+    }
+
+    .module-num {
+      width: 30px;
+      height: 30px;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .module-title { font-size: 12px; }
+    .module-desc { font-size: 10px; }
+    .module-count { display: none; }
+
+    /* Includes grid — 1 col on mobile */
+    .includes-grid { grid-template-columns: 1fr; gap: 8px; }
+
+    .include-card { padding: 14px; }
+
+    /* Progress tracker */
+    .progress-tracker { padding: 16px; }
+
+    /* Instructor & social */
+    .instructor-card,
+    .social-card { padding: 16px; }
+
+    /* FAQ */
+    .faq-q { font-size: 12px; }
+    .faq-a { font-size: 11px; }
+  }
+
+  @media (max-width: 400px) {
+    .page-wrap { padding: 0 14px 100px; }
     .stats-bar { grid-template-columns: 1fr 1fr; }
-    .hero-title { font-size: 28px; }
-    .nav-right { flex-wrap: wrap; }
+    .hero-title { font-size: 22px; }
+    .nav-name { font-size: 13px; }
   }
 </style>
 </head>
 <body>
 
 <div class="page-wrap">
+
+  <!-- MOBILE FLOATING CTA BAR (only visible on mobile) -->
+  <div class="mobile-cta-bar">
+    <div class="mobile-cta-price">
+      <span class="price-orig">$1,248.75/mo</span>
+      <span class="price-main">$999<span style="font-size:12px;font-weight:400;color:var(--text-3);">/mo</span></span>
+      <span class="price-sub">× 3 payments · code LAUNCH saves 20%</span>
+    </div>
+    <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" class="btn-enroll">
+      Enroll Now →
+    </a>
+  </div>
 
   <!-- NAV -->
   <nav>
