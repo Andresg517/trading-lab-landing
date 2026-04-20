@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Trading Lab — Full Access</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -24,7 +24,7 @@
     --text: #f0f4f0;
     --text-2: #9aaa9a;
     --text-3: #556055;
-    --font-display: 'Syne', sans-serif;
+    --font-display: 'Inter', sans-serif;
     --font-body: 'DM Sans', sans-serif;
     --radius: 12px;
     --radius-sm: 8px;
@@ -80,7 +80,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px 0 0;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   .nav-brand {
@@ -93,14 +93,18 @@
     width: 38px;
     height: 38px;
     border-radius: 10px;
-    background: var(--green-glow);
+    background: linear-gradient(135deg, #1a6b3a, #0e4524);
     border: 1px solid var(--green-border);
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--green-bright);
+    flex-shrink: 0;
+    letter-spacing: -0.5px;
   }
-
-  .nav-logo svg { width: 18px; height: 18px; }
 
   .nav-name {
     font-family: var(--font-display);
@@ -227,34 +231,40 @@
     position: relative;
     z-index: 2;
     padding: 40px 40px 36px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    background: var(--green-glow);
-    border: 1px solid var(--green-border);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
     border-radius: 20px;
-    padding: 4px 13px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--green-bright);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-bottom: 18px;
+    padding: 6px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 22px;
   }
 
   .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -1.5px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(38px, 6.5vw, 68px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -3px;
     color: var(--text);
-    margin-bottom: 14px;
+    margin-bottom: 20px;
     max-width: 100%;
     word-break: break-word;
+    text-align: center;
   }
 
   .hero-title .accent { color: var(--green-bright); }
@@ -265,6 +275,7 @@
     max-width: 100%;
     line-height: 1.7;
     margin-bottom: 28px;
+    text-align: center;
   }
 
   .hero-cta-row {
@@ -272,6 +283,7 @@
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .btn-hero {
@@ -1071,8 +1083,9 @@
     }
 
     .hero-title {
-      font-size: clamp(22px, 6vw, 30px);
-      letter-spacing: -0.8px;
+      font-size: clamp(30px, 8vw, 44px);
+      letter-spacing: -2px;
+      text-align: center;
     }
 
     .hero-desc {
@@ -1178,7 +1191,6 @@
   @media (max-width: 400px) {
     .page-wrap { padding-left: 12px; padding-right: 12px; }
     .hero-title { font-size: 20px; }
-    .nav-name { font-size: 13px; }
     .stat-val { font-size: 18px; }
     .code-banner { flex-direction: column; align-items: flex-start; gap: 8px; }
     .code-saving { width: 100%; }
@@ -1204,12 +1216,7 @@
   <!-- NAV -->
   <nav>
     <div class="nav-brand">
-      <div class="nav-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-          <polyline points="16 7 22 7 22 13"/>
-        </svg>
-      </div>
+      <div class="nav-logo">TL</div>
       <div>
         <div class="nav-name">The Trading Lab</div>
         <div class="nav-sub">by Andres</div>
@@ -1269,10 +1276,10 @@
     <div class="hero-content">
       <div class="hero-eyebrow">
         <div class="live-dot"></div>
-        Now Enrolling · Spring 2025 Cohort
+        Trusted By Traders Around The World
       </div>
-      <h1 class="hero-title">Learn to Trade.<br><span class="accent">Quit Your 9-to-5.</span></h1>
-      <p class="hero-desc">Most people spend 40+ years trading time for money. Day trading is the skill that breaks you out — but only if you learn it right. Built for complete beginners.</p>
+      <h1 class="hero-title">Learn To Trade. <span class="accent">Simple, Repeatable Trading Strategy</span> <span style="color: var(--text);">You Can Actually Follow</span></h1>
+      <p class="hero-desc">Most people spend years learning complicated trading concepts that don't stick. This system simplifies everything so both beginners and experienced traders can trade with clarity, consistency, and confidence.</p>
       <div class="hero-cta-row">
         <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" class="btn-hero">
           Get Full Access
@@ -1441,23 +1448,6 @@
     <div>
       <div class="sidebar-sticky">
 
-        <!-- Progress -->
-        <div class="progress-tracker">
-          <div class="progress-top">
-            <div class="progress-title">Your progress — Chapter 2 of 5</div>
-            <div class="progress-pct">33%</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="pbar"></div>
-          </div>
-          <div class="progress-dots">
-            <div class="pdot done"></div>
-            <div class="pdot done"></div>
-            <div class="pdot active"></div>
-            <div class="pdot"></div>
-            <div class="pdot"></div>
-          </div>
-        </div>
 
         <!-- Price Card -->
         <div class="price-card" id="enroll">
