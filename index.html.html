@@ -30,7 +30,11 @@
     --radius-sm: 8px;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
 
   body {
     background: var(--bg);
@@ -40,6 +44,12 @@
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  img, svg, video, canvas, audio, iframe, embed, object {
+    max-width: 100%;
   }
 
   /* ─── NOISE OVERLAY ─── */
@@ -58,8 +68,10 @@
     position: relative;
     z-index: 1;
     max-width: 960px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 20px 80px;
+    overflow-x: hidden;
   }
 
   /* ─── NAV ─── */
@@ -185,7 +197,7 @@
 
   .hero-glow-1 {
     position: absolute;
-    width: 500px;
+    width: min(500px, 100%);
     height: 300px;
     background: radial-gradient(ellipse, rgba(34,197,94,0.15) 0%, transparent 65%);
     top: -80px;
@@ -195,7 +207,7 @@
 
   .hero-glow-2 {
     position: absolute;
-    width: 200px;
+    width: min(200px, 40%);
     height: 200px;
     background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%);
     bottom: 40px;
@@ -241,7 +253,8 @@
     letter-spacing: -1.5px;
     color: var(--text);
     margin-bottom: 14px;
-    max-width: 560px;
+    max-width: 100%;
+    word-break: break-word;
   }
 
   .hero-title .accent { color: var(--green-bright); }
@@ -249,7 +262,7 @@
   .hero-desc {
     font-size: 15px;
     color: var(--text-2);
-    max-width: 460px;
+    max-width: 100%;
     line-height: 1.7;
     margin-bottom: 28px;
   }
@@ -435,9 +448,12 @@
   .module-desc {
     font-size: 11px;
     color: var(--text-3);
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .module-meta {
@@ -1001,7 +1017,11 @@
     .mobile-cta-bar { display: flex; }
 
     /* Add bottom padding so content isn't hidden behind bar */
-    .page-wrap { padding-bottom: 100px; }
+    .page-wrap { padding-bottom: 100px; padding-left: 14px; padding-right: 14px; }
+
+    /* Prevent any element from exceeding screen width */
+    * { max-width: 100%; }
+    pre, code { overflow-x: auto; }
 
     /* Nav — compact */
     nav {
@@ -1012,58 +1032,68 @@
     }
 
     .nav-badge { display: none; }
-
     .nav-right { gap: 8px; }
 
     .btn-primary {
       padding: 8px 14px;
       font-size: 12px;
+      white-space: nowrap;
     }
 
-    /* Promo banner */
+    /* Promo banner — stack on very small screens */
     .code-banner {
       padding: 12px 14px;
       gap: 10px;
       margin-bottom: 12px;
+      flex-wrap: wrap;
     }
 
     .code-value { font-size: 14px; }
+    .code-saving { text-align: left; }
     .code-saving strong { font-size: 15px; }
 
     /* Hero */
     .hero {
       border-radius: 14px;
-      min-height: 300px;
+      min-height: 280px;
       margin-bottom: 16px;
     }
 
     .hero-content {
-      padding: 24px 20px 22px;
+      padding: 20px 16px 20px;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      padding: 3px 10px;
+      white-space: normal;
+      text-align: center;
     }
 
     .hero-title {
-      font-size: clamp(24px, 7vw, 34px);
-      letter-spacing: -1px;
+      font-size: clamp(22px, 6vw, 30px);
+      letter-spacing: -0.8px;
     }
 
     .hero-desc {
       font-size: 13px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .hero-cta-row {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       gap: 10px;
     }
 
     .btn-hero {
       width: 100%;
       justify-content: center;
-      padding: 14px 20px;
+      padding: 14px 16px;
+      font-size: 13px;
     }
 
-    .hero-price { font-size: 12px; }
+    .hero-price { font-size: 11px; text-align: center; }
 
     /* Stats bar — 2 columns */
     .stats-bar {
@@ -1072,72 +1102,86 @@
       margin-bottom: 16px;
     }
 
-    .stat-item { padding: 14px 14px; }
-    .stat-val { font-size: 22px; }
-    .stat-label { font-size: 11px; }
+    .stat-item { padding: 12px 12px; }
+    .stat-val { font-size: 20px; }
+    .stat-label { font-size: 10px; }
 
-    /* Two-col → single col, sidebar moves below */
+    /* Two-col → single col */
     .two-col {
       grid-template-columns: 1fr;
       gap: 0;
     }
 
-    /* Sidebar: not sticky on mobile, appears below content */
+    /* Sidebar: not sticky on mobile */
     .sidebar-sticky {
       position: static;
       margin-top: 16px;
     }
 
-    /* Hide the desktop price card on mobile (we use floating bar instead) */
+    /* Hide desktop price card, use floating bar instead */
     .price-card { display: none; }
 
     /* Sections */
     .section {
-      padding: 18px 16px;
-      margin-bottom: 12px;
+      padding: 16px 14px;
+      margin-bottom: 10px;
     }
 
-    .section-title { font-size: 14px; }
+    .section-title {
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
-    /* Module rows — tighter on mobile */
+    .section-header {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* Module rows */
     .module-row {
-      padding: 12px 12px;
+      padding: 11px 10px;
       gap: 10px;
     }
 
     .module-num {
-      width: 30px;
-      height: 30px;
-      font-size: 11px;
+      width: 28px;
+      height: 28px;
+      font-size: 10px;
       flex-shrink: 0;
     }
 
     .module-title { font-size: 12px; }
-    .module-desc { font-size: 10px; }
+    .module-desc { font-size: 10px; -webkit-line-clamp: 1; }
     .module-count { display: none; }
 
-    /* Includes grid — 1 col on mobile */
+    /* Includes grid — 1 col */
     .includes-grid { grid-template-columns: 1fr; gap: 8px; }
-
-    .include-card { padding: 14px; }
+    .include-card { padding: 12px; }
 
     /* Progress tracker */
-    .progress-tracker { padding: 16px; }
+    .progress-tracker { padding: 14px; }
 
     /* Instructor & social */
     .instructor-card,
-    .social-card { padding: 16px; }
+    .social-card { padding: 14px; }
 
     /* FAQ */
     .faq-q { font-size: 12px; }
     .faq-a { font-size: 11px; }
+
+    /* Mobile CTA bar itself */
+    .mobile-cta-bar { padding: 10px 14px; }
+    .mobile-cta-price .price-main { font-size: 16px; }
+    .mobile-cta-price .price-sub { font-size: 9px; }
   }
 
   @media (max-width: 400px) {
-    .page-wrap { padding: 0 14px 100px; }
-    .stats-bar { grid-template-columns: 1fr 1fr; }
-    .hero-title { font-size: 22px; }
+    .page-wrap { padding-left: 12px; padding-right: 12px; }
+    .hero-title { font-size: 20px; }
     .nav-name { font-size: 13px; }
+    .stat-val { font-size: 18px; }
+    .code-banner { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .code-saving { width: 100%; }
   }
 </style>
 </head>
@@ -1190,7 +1234,7 @@
     </div>
     <div class="code-saving">
       You save
-      <strong>$750</strong>
+      <strong>$600</strong>
     </div>
   </div>
 
@@ -1336,7 +1380,7 @@
       <!-- What's Included -->
       <div class="section">
         <div class="section-header">
-          <div class="section-title">What's Included</div>
+          <div class="section-title">What You Get — Everything You Need To Become A Profitable Trader</div>
         </div>
         <div class="includes-grid">
           <div class="include-card">
