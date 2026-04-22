@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Trading Lab — Full Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #22c55e;
+    --green-bright: #4ade80;
+    --green-dim: #16a34a;
+    --green-glow: rgba(34,197,94,0.12);
+    --green-border: rgba(34,197,94,0.2);
+    --bg: #080a08;
+    --bg-2: #0d110d;
+    --bg-3: #111611;
+    --bg-4: #161d16;
+    --border: rgba(255,255,255,0.06);
+    --border-2: rgba(255,255,255,0.1);
+    --text: #f0f4f0;
+    --text-2: #9aaa9a;
+    --text-3: #556055;
+    --font-display: 'Inter', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  img, svg, video, canvas, audio, iframe, embed, object {
+    max-width: 100%;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── LAYOUT ─── */
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 0;
+    margin-bottom: 20px;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1a6b3a, #0e4524);
+    border: 1px solid var(--green-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--green-bright);
+    flex-shrink: 0;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .nav-sub {
+    font-size: 11px;
+    color: var(--text-3);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-2);
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .btn-primary {
+    background: var(--green-dim);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 9px 20px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--green);
+    transform: translateY(-1px);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    margin-bottom: 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    background: var(--bg-2);
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34,197,94,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,197,94,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .hero-glow-1 {
+    position: absolute;
+    width: min(500px, 100%);
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(34,197,94,0.15) 0%, transparent 65%);
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hero-glow-2 {
+    position: absolute;
+    width: min(200px, 40%);
+    height: 200px;
+    background: radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%);
+    bottom: 40px;
+    right: 40px;
+  }
+
+  .hero-chart-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 160px;
+    width: 100%;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px 40px 36px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 22px;
+  }
+
+  .hero-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(38px, 6.5vw, 68px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -3px;
+    color: var(--text);
+    margin-bottom: 20px;
+    max-width: 100%;
+    word-break: break-word;
+    text-align: center;
+  }
+
+  .hero-title .accent { color: var(--green-bright); }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--text-2);
+    max-width: 100%;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-hero {
+    background: var(--green);
+    color: #040804;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 13px 28px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .btn-hero:hover {
+    background: var(--green-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(34,197,94,0.3);
+  }
+
+  .hero-price {
+    font-size: 13px;
+    color: var(--text-3);
+  }
+
+  .hero-price strong {
+    color: var(--text-2);
+    font-weight: 600;
+  }
+
+  .hero-price s {
+    color: var(--text-3);
+    text-decoration: line-through;
+  }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .stat-item {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+
+  .stat-item:hover { border-color: var(--border-2); }
+
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--green-bright);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-3);
+    line-height: 1.4;
+  }
+
+  /* ─── TWO-COL LAYOUT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    color: var(--text-3);
+    background: var(--bg-4);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 3px 8px;
+  }
+
+  /* ─── MODULES ─── */
+  .module-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .module-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+
+  .module-row:hover {
+    border-color: var(--border-2);
+    background: var(--bg-4);
+  }
+
+  .module-row.active {
+    border-color: var(--green-border);
+    background: rgba(34,197,94,0.04);
+  }
+
+  .module-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--bg-4);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-3);
+    flex-shrink: 0;
+  }
+
+  .module-row.active .module-num {
+    background: var(--green-glow);
+    border-color: var(--green-border);
+    color: var(--green-bright);
+  }
+
+  .module-info { flex: 1; min-width: 0; }
+
+  .module-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .module-desc {
+    font-size: 11px;
+    color: var(--text-3);
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .module-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .module-count {
+    font-size: 11px;
+    color: var(--text-3);
+  }
+
+  .badge-done {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--green-glow);
+    border: 1px solid var(--green-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green-bright);
+    font-size: 9px;
+  }
+
+  .badge-lock {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg-4);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-3);
+    font-size: 9px;
+  }
+
+  .badge-current {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #60a5fa;
+    font-size: 9px;
+  }
+
+  /* ─── INCLUDES ─── */
+  .includes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .include-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: border-color 0.15s;
+  }
+
+  .include-card:hover { border-color: var(--border-2); }
+
+  .include-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+
+  .include-icon.g { background: rgba(34,197,94,0.1); }
+  .include-icon.b { background: rgba(59,130,246,0.1); }
+  .include-icon.a { background: rgba(245,158,11,0.1); }
+  .include-icon.p { background: rgba(139,92,246,0.1); }
+
+  .include-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .include-desc {
+    font-size: 11px;
+    color: var(--text-3);
+    line-height: 1.5;
+  }
+
+  /* ─── FAQ ─── */
+  .faq-list { display: flex; flex-direction: column; gap: 1px; }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+  }
+
+  .faq-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .faq-q {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    user-select: none;
+  }
+
+  .faq-q::after {
+    content: '+';
+    font-size: 16px;
+    color: var(--text-3);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  .faq-item.open .faq-q::after {
+    transform: rotate(45deg);
+    color: var(--green-bright);
+  }
+
+  .faq-a {
+    font-size: 12px;
+    color: var(--text-3);
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding-top 0.2s;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding-top: 10px;
+  }
+
+  /* ─── SIDEBAR STICKY ─── */
+  .sidebar-sticky {
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ─── PRICE CARD ─── */
+  .price-card {
+    background: var(--bg-3);
+    border: 1px solid var(--green-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .price-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(34,197,94,0.06), transparent);
+  }
+
+  .price-label {
+    font-size: 11px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+
+  .price-amount {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-amount span {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-3);
+    letter-spacing: 0;
+  }
+
+  .price-original {
+    font-size: 12px;
+    color: var(--text-3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .price-original s { text-decoration: line-through; }
+
+  .price-badge {
+    background: var(--green-glow);
+    border: 1px solid var(--green-border);
+    color: var(--green-bright);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .price-body { padding: 18px 20px; }
+
+  .price-perks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 18px;
+  }
+
+  .price-perks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.4;
+  }
+
+  .perk-check {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--green-glow);
+    border: 1px solid var(--green-border);
+    color: var(--green-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .btn-enroll {
+    width: 100%;
+    background: var(--green);
+    color: #040804;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-enroll:hover {
+    background: var(--green-bright);
+    box-shadow: 0 8px 30px rgba(34,197,94,0.35);
+    transform: translateY(-1px);
+  }
+
+  .price-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 10px;
+  }
+
+  .price-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--text-3);
+  }
+
+  /* ─── INSTRUCTOR ─── */
+  .instructor-card {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .instructor-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .instructor-av {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0e4524, #1a6b3a);
+    border: 2px solid var(--green-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--green-bright);
+    flex-shrink: 0;
+  }
+
+  .instructor-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .instructor-handle {
+    font-size: 11px;
+    color: var(--text-3);
+  }
+
+  .instructor-bio {
+    font-size: 12px;
+    color: var(--text-3);
+    line-height: 1.6;
+  }
+
+  /* ─── SOCIAL PROOF ─── */
+  .social-card {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .social-stars {
+    color: #f59e0b;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .social-rating {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .social-count { font-size: 11px; color: var(--text-3); margin-bottom: 14px; }
+
+  .review-item {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .review-av {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg-4);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--text-3);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .review-name { font-size: 12px; font-weight: 600; color: var(--text-2); }
+  .review-stars { font-size: 10px; color: #f59e0b; margin-left: auto; }
+  .review-text { font-size: 11px; color: var(--text-3); line-height: 1.5; }
+
+  /* ─── CODE BANNER ─── */
+  .code-banner {
+    background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(34,197,94,0.02));
+    border: 1px solid var(--green-border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .code-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--green-glow);
+    border: 1px solid var(--green-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .code-text { flex: 1; }
+  .code-label { font-size: 11px; color: var(--text-3); margin-bottom: 2px; }
+  .code-value {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green-bright);
+    letter-spacing: 2px;
+  }
+
+  .code-saving { font-size: 12px; color: var(--text-2); text-align: right; }
+  .code-saving strong { color: var(--green-bright); display: block; font-family: var(--font-display); font-size: 18px; font-weight: 800; }
+
+  /* ─── PROGRESS TRACKER ─── */
+  .progress-tracker {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .progress-title { font-size: 12px; color: var(--text-2); font-weight: 500; }
+  .progress-pct { font-size: 12px; font-weight: 700; color: var(--green-bright); }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--bg-4);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #16a34a, #4ade80);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1.2s ease;
+  }
+
+  .progress-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .pdot {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--bg-4);
+  }
+
+  .pdot.done { background: var(--green-bright); }
+  .pdot.active { background: #166534; }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 4px; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: fadeUp 0.6s ease both; }
+  .stats-bar { animation: fadeUp 0.6s 0.1s ease both; }
+  .two-col { animation: fadeUp 0.6s 0.2s ease both; }
+
+  /* ─── RESPONSIVE ─── */
+
+  /* Floating mobile CTA bar */
+  .mobile-cta-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 12px 16px;
+    background: rgba(8,10,8,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border-2);
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-cta-price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-cta-price .price-orig {
+    font-size: 10px;
+    color: var(--text-3);
+    text-decoration: line-through;
+  }
+
+  .mobile-cta-price .price-main {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+
+  .mobile-cta-price .price-sub {
+    font-size: 10px;
+    color: var(--text-3);
+  }
+
+  .mobile-cta-bar .btn-enroll {
+    flex: 1;
+    max-width: 220px;
+    padding: 13px 16px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    /* Show floating CTA bar */
+    .mobile-cta-bar { display: flex; }
+
+    /* Add bottom padding so content isn't hidden behind bar */
+    .page-wrap { padding-bottom: 100px; padding-left: 14px; padding-right: 14px; }
+
+    /* Prevent any element from exceeding screen width */
+    * { max-width: 100%; }
+    pre, code { overflow-x: auto; }
+
+    /* Nav — compact */
+    nav {
+      flex-wrap: nowrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 14px 0 0;
+    }
+
+    .nav-badge { display: none; }
+    .nav-right { gap: 8px; }
+
+    .btn-primary {
+      padding: 8px 14px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* Promo banner — stack on very small screens */
+    .code-banner {
+      padding: 12px 14px;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .code-value { font-size: 14px; }
+    .code-saving { text-align: left; }
+    .code-saving strong { font-size: 15px; }
+
+    /* Hero */
+    .hero {
+      border-radius: 14px 14px 0 0;
+      min-height: 280px;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .hero-content {
+      padding: 20px 16px 20px;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      padding: 3px 10px;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 7vw, 38px);
+      letter-spacing: -1.5px;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .hero-cta-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .btn-hero {
+      width: 100%;
+      justify-content: center;
+      padding: 14px 16px;
+      font-size: 13px;
+    }
+
+    .hero-price { font-size: 11px; text-align: center; }
+
+    /* Stats bar — 2 columns */
+    .stats-bar {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .stat-item { padding: 12px 12px; }
+    .stat-val { font-size: 20px; }
+    .stat-label { font-size: 10px; }
+
+    /* Two-col → single col */
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    /* Sidebar: not sticky on mobile */
+    .sidebar-sticky {
+      position: static;
+      margin-top: 16px;
+    }
+
+    /* Hide desktop price card, use floating bar instead */
+    .price-card { display: none; }
+
+    /* Instructor and social cards - show below content on mobile */
+    .instructor-card { margin-top: 0; }
+
+    /* Ensure sidebar items don't overflow */
+    .sidebar-sticky > * { max-width: 100%; }
+
+    /* Sections */
+    .section {
+      padding: 16px 14px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .section-header {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* Module rows */
+    .module-row {
+      padding: 11px 10px;
+      gap: 10px;
+    }
+
+    .module-num {
+      width: 28px;
+      height: 28px;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .module-title { font-size: 12px; }
+    .module-desc { font-size: 10px; -webkit-line-clamp: 1; }
+    .module-count { display: none; }
+
+    /* Includes grid — 1 col */
+    .includes-grid { grid-template-columns: 1fr; gap: 8px; }
+    .include-card { padding: 12px; }
+
+    /* Progress tracker */
+    .progress-tracker { padding: 14px; }
+
+    /* Instructor & social */
+    .instructor-card,
+    .social-card { padding: 14px; }
+
+    /* FAQ */
+    .faq-q { font-size: 12px; }
+    .faq-a { font-size: 11px; }
+
+    /* Mobile CTA bar itself */
+    .mobile-cta-bar { padding: 10px 14px; }
+    .mobile-cta-price .price-main { font-size: 16px; }
+    .mobile-cta-price .price-sub { font-size: 9px; }
+  }
+
+  @media (max-width: 400px) {
+    .page-wrap { padding-left: 12px; padding-right: 12px; }
+    .hero-title { font-size: 20px; }
+    .stat-val { font-size: 18px; }
+    .code-banner { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .code-saving { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- MOBILE FLOATING CTA BAR (only visible on mobile) -->
+  <div class="mobile-cta-bar">
+    <div class="mobile-cta-price">
+      <span class="price-orig">$1,248.75/mo</span>
+      <span class="price-main">$999<span style="font-size:12px;font-weight:400;color:var(--text-3);">/mo</span></span>
+      <span class="price-sub">× 3 payments · code LAUNCH saves 20%</span>
+    </div>
+    <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" class="btn-enroll">
+      Enroll Now →
+    </a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-logo">TL</div>
+      <div>
+        <div class="nav-name">The Trading Lab</div>
+        <div class="nav-sub">by Andres</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" class="btn-primary">Enroll Now →</a>
+    </div>
+  </nav>
+
+  <!-- PROMO BANNER -->
+  <div class="code-banner">
+    <div class="code-icon">🎯</div>
+    <div class="code-text">
+      <div class="code-label">Limited launch offer — use at checkout</div>
+      <div class="code-value">LAUNCH</div>
+    </div>
+    <div class="code-saving">
+      You save
+      <strong>$600</strong>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-visual">
+      <div class="hero-grid"></div>
+      <div class="hero-glow-1"></div>
+      <div class="hero-glow-2"></div>
+      <svg class="hero-chart-svg" viewBox="0 0 960 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#22c55e" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <polyline points="0,130 80,120 160,124 240,100 320,108 400,85 480,90 560,70 640,55 720,45 800,30 880,20 960,10" fill="none" stroke="rgba(34,197,94,0.35)" stroke-width="2"/>
+        <polygon points="0,130 80,120 160,124 240,100 320,108 400,85 480,90 560,70 640,55 720,45 800,30 880,20 960,10 960,160 0,160" fill="url(#chartGrad)"/>
+        <!-- Candles -->
+        <line x1="160" y1="115" x2="160" y2="130" stroke="rgba(239,68,68,0.4)" stroke-width="1.5"/>
+        <rect x="155" y="118" width="10" height="12" rx="1" fill="rgba(239,68,68,0.25)" stroke="rgba(239,68,68,0.4)" stroke-width="0.5"/>
+        <line x1="320" y1="100" x2="320" y2="112" stroke="rgba(239,68,68,0.4)" stroke-width="1.5"/>
+        <rect x="315" y="102" width="10" height="10" rx="1" fill="rgba(239,68,68,0.25)" stroke="rgba(239,68,68,0.4)" stroke-width="0.5"/>
+        <line x1="480" y1="82" x2="480" y2="95" stroke="rgba(34,197,94,0.5)" stroke-width="1.5"/>
+        <rect x="475" y="84" width="10" height="11" rx="1" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.5)" stroke-width="0.5"/>
+        <line x1="640" y1="48" x2="640" y2="62" stroke="rgba(34,197,94,0.5)" stroke-width="1.5"/>
+        <rect x="635" y="50" width="10" height="12" rx="1" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.5)" stroke-width="0.5"/>
+        <line x1="800" y1="24" x2="800" y2="36" stroke="rgba(34,197,94,0.5)" stroke-width="1.5"/>
+        <rect x="795" y="26" width="10" height="10" rx="1" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.5)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="live-dot"></div>
+        Trusted By Traders Around The World
+      </div>
+      <h1 class="hero-title">Learn To Trade.<br><span class="accent">Simple, Repeatable<br>Trading Strategy</span><br>You Can Actually Follow</h1>
+      <p class="hero-desc" style="color: #ffffff;">Most people spend years learning complicated trading concepts that don't stick. This system simplifies everything so both beginners and experienced traders can trade with clarity, consistency, and confidence.</p>
+      <div class="hero-cta-row">
+        <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" class="btn-hero">
+          Get Full Access
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="hero-price">
+          <s>$1,248.75</s> → <strong>$999/mo × 3</strong><br>
+          Use <strong>LAUNCH</strong> for 20% off
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust badges — flush below hero -->
+  <div style="display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; background: var(--bg-2); border: 1px solid var(--border); border-top: none; border-radius: 0 0 14px 14px; padding: 14px 20px; margin-bottom: 28px;">
+    <div style="display: flex; align-items: center; gap: 7px; font-family: 'Inter', sans-serif; font-size: 13px; color: #9aaa9a;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Secure checkout
+    </div>
+    <div style="display: flex; align-items: center; gap: 7px; font-family: 'Inter', sans-serif; font-size: 13px; color: #9aaa9a;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Instant access
+    </div>
+    <div style="display: flex; align-items: center; gap: 7px; font-family: 'Inter', sans-serif; font-size: 13px; color: #9aaa9a;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Highly rated
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px;">
+
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 16px;">
+      <div style="width: 52px; height: 52px; border-radius: 14px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.6"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase;">Trading Community</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 16px;">
+      <div style="width: 52px; height: 52px; border-radius: 14px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: center;">Verified <span style="color: var(--green-bright);">★★★★★</span> Reviews</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 16px;">
+      <div style="width: 52px; height: 52px; border-radius: 14px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><path d="M9.5 9.5A4 4 0 0114 8"/></svg>
+      </div>
+      <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase;">Testimonies</div>
+    </div>
+
+  </div>
+
+  <!-- INSTRUCTOR — below stats icons -->
+  <div class="instructor-card" style="margin-bottom: 28px; text-align: center;">
+    <div class="instructor-top" style="justify-content: center;">
+      <div class="instructor-av">A</div>
+      <div>
+        <div class="instructor-name">Andres</div>
+        <div class="instructor-handle" style="color: #7a9a7a;">@therealandresg · Instructor</div>
+      </div>
+    </div>
+    <p class="instructor-bio" style="color: #ffffff;">Professional day trader and educator. I built The Trading Lab to teach the exact system I use daily — breaking down complex markets into a simple, repeatable process that even complete beginners can master.</p>
+  </div>
+
+  <!-- MAIN TWO-COL -->
+  <div class="two-col">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- What's Included -->
+      <div class="section">
+        <div class="section-header" style="flex-direction: column; align-items: center; text-align: center; gap: 8px; margin-bottom: 24px;">
+          <div style="font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--green-bright); letter-spacing: 2px; text-transform: uppercase;">What You Get</div>
+          <div style="font-family: 'Inter', sans-serif; font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; color: var(--text);">Everything You Need To Become<br><span style="color: var(--green-bright);">A Profitable Trader</span></div>
+        </div>
+        <div class="includes-grid">
+          <!-- Card 1: Price Action -->
+          <div class="include-card" style="padding: 24px; background: #111611;">
+            <div style="width: 52px; height: 52px; border-radius: 12px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 14px; letter-spacing: -0.5px;">A Clear Price Action Trading System</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #8aaa8a; line-height: 1.7;">Learn the exact system Andres uses to analyze the market, identify key levels, and execute high-probability trades with clarity, consistency, and confidence.</div>
+          </div>
+          <!-- Card 2: Step by Step -->
+          <div class="include-card" style="padding: 24px; background: #111611;">
+            <div style="width: 52px; height: 52px; border-radius: 12px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 14px; letter-spacing: -0.5px;">Step By Step From Beginner To Execution</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #8aaa8a; line-height: 1.7;">Everything is taught in a structured order so even if you are completely new to trading you can learn the system from the ground up and know exactly how to apply it.</div>
+          </div>
+          <!-- Card 3: Risk Management -->
+          <div class="include-card" style="padding: 24px; background: #111611;">
+            <div style="width: 52px; height: 52px; border-radius: 12px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 14px; letter-spacing: -0.5px;">Risk Management That Protects Your Account</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #8aaa8a; line-height: 1.7;">Learn the rules that keep traders in the game long enough to become profitable - covering position sizing, risk control, and how to avoid the mistakes that wipe out most accounts - plus exactly how I manage risk and grow accounts step by step.</div>
+          </div>
+          <!-- Card 4: Community -->
+          <div class="include-card" style="padding: 24px; background: #111611;">
+            <div style="width: 52px; height: 52px; border-radius: 12px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 14px; letter-spacing: -0.5px;">A Community Of Traders Applying The Same System</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #8aaa8a; line-height: 1.7;">Join a growing community where traders share ideas, ask questions, and support each other while learning and applying the strategy.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ready to Become Profitable CTA -->
+      <div class="section" style="text-align: center; padding: 48px 32px; background: #0d110d;">
+        <div style="font-family: 'Inter', sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 16px;">
+          <span style="color: var(--text);">Ready to Become<br></span>
+          <span style="color: var(--green-bright);">Profitable?</span>
+        </div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-3); line-height: 1.7; max-width: 460px; margin: 0 auto 28px;">
+          Join traders who took the leap. One payment, lifetime access, no recurring fees.
+        </div>
+
+        <!-- Pricing Card -->
+        <div style="max-width: 520px; margin: 0 auto; background: #0e1a0e; border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; overflow: hidden;">
+          <!-- Founders badge -->
+          <div style="display: flex; justify-content: center; padding: 20px 20px 0;">
+            <div style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: 20px; padding: 6px 18px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--green-bright); letter-spacing: 2px; text-transform: uppercase;">Founders Access</div>
+          </div>
+          <!-- Price -->
+          <div style="padding: 24px 24px 0; text-align: center;">
+            <div style="display: flex; align-items: baseline; justify-content: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-3); text-decoration: line-through; white-space: nowrap;">$1,248.75</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: clamp(36px, 8vw, 48px); font-weight: 900; color: var(--text); letter-spacing: -2px; line-height: 1; white-space: nowrap;">$999<span style="font-size: clamp(16px, 4vw, 20px); font-weight: 500; color: var(--text-3); letter-spacing: 0;">/mo × 3</span></span>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-3); margin-bottom: 8px;">Founders Launch Price · Lifetime Access</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--green-bright); font-weight: 600; margin-bottom: 24px;">Use Promo Code <span style="font-family: monospace; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 4px; padding: 2px 8px;">LAUNCH</span> for an additional 20% Off</div>
+          </div>
+          <!-- Perks -->
+          <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; text-align: left;">
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Complete A to Z price action trading system
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Step by step training from beginner to execution
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Private trading community access
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Risk management framework used by profitable traders
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              All future updates included
+            </div>
+          </div>
+          <!-- Quote -->
+          <div style="padding: 0 20px; margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-3); line-height: 1.7; text-align: center;">
+            Most traders lose thousands learning this the hard way. This program gives you the exact system from day one - so you can skip the costly mistakes and get straight to consistency.
+          </div>
+          <!-- Button -->
+          <div style="padding: 0 20px 24px;">
+            <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--green); color: #040804; border-radius: 12px; padding: 18px; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; text-decoration: none; letter-spacing: -0.3px; transition: all 0.2s; box-sizing: border-box;">
+              Get Full Access →
+            </a>
+            <div style="text-align: center; font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); margin-top: 12px;">Secure checkout · Instant access · Lifetime updates included</div>
+          </div>
+        </div>
+
+        <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" class="btn-hero" style="display: none;">
+          Get Full Access
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- FAQ -->
+      <div class="section">
+        <div class="section-header" style="justify-content: center; margin-bottom: 24px;">
+          <div style="font-family: 'Inter', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--text); letter-spacing: -1.5px; text-align: center;">Frequently Asked Questions</div>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How quickly can I expect results?</div>
+            <div class="faq-a">Results depend on how consistently you apply the system. Some members start seeing improvements within a few weeks, while for others it may take longer. The key is learning the rules of the strategy and applying them consistently over time.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I need a funded account to use this?</div>
+            <div class="faq-a">No. The system can be applied to both personal trading accounts and funded challenges. Many traders use it to grow their own accounts while others apply it when attempting funded programs.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I access the content on my phone?</div>
+            <div class="faq-a">Yes. The entire program can be accessed through Whop on desktop, tablet, or mobile so you can learn and review the material from anywhere.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I need any experience to join?</div>
+            <div class="faq-a">Absolutely not. The Trading Lab is built from the ground up for complete beginners. We start with the very basics of how markets work and build up from there. If you can follow instructions, you can learn to trade.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much capital do I need to start?</div>
+            <div class="faq-a">Zero. You can paper trade (simulated trading with fake money) completely for free while you learn. When you're ready to go live, we recommend starting with $500–$2,000 depending on your risk tolerance.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is this really lifetime access?</div>
+            <div class="faq-a">Yes. After completing your 3 monthly payments of $999 (or $799 with code LAUNCH), you keep full access to every lesson, future updates, and the community forever. No hidden renewals.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do you provide trading signals?</div>
+            <div class="faq-a">No. The goal of The Trading Lab is to teach you the system so you can analyze the markets and make your own trading decisions rather than relying on signals.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What markets does this cover?</div>
+            <div class="faq-a">The system is based on price action and market structure which means it can be applied across multiple financial markets. Most traders use it on Commodities and indices, which are the markets Andres trades most often, but the same concepts can also be applied to forex, futures and other liquid markets.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN (STICKY) -->
+    <div>
+      <div class="sidebar-sticky">
+
+
+        <!-- Price Card -->
+        <div class="price-card" id="enroll">
+          <div class="price-header">
+            <div class="price-label">Full Access — 3-payment plan</div>
+            <div class="price-amount">$999<span>/mo</span></div>
+            <div class="price-original">
+              <s>$1,248.75/mo</s>
+              <span class="price-badge">Save 20%</span>
+            </div>
+          </div>
+          <div class="price-body">
+            <ul class="price-perks">
+              <li><div class="perk-check">✓</div>Full 15-lesson trading course (5 chapters)</li>
+              <li><div class="perk-check">✓</div>Live trading chat during market hours</li>
+              <li><div class="perk-check">✓</div>Daily pre-market & post-market updates</li>
+              <li><div class="perk-check">✓</div>Private community forum — 1,200+ traders</li>
+              <li><div class="perk-check">✓</div>Lifetime access after 3 payments</li>
+              <li><div class="perk-check">✓</div>Future course updates included free</li>
+            </ul>
+            <a href="https://whop.com/checkout/plan_EAvYBCaIQikJP" target="_blank" class="btn-enroll">
+              Enroll Now — Get Access
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <p class="price-note">Use code <strong style="color: var(--green-bright); font-family: monospace;">LAUNCH</strong> for 20% off → $799/mo</p>
+          </div>
+          <div class="price-footer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-3)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Secure checkout · Powered by Whop
+          </div>
+        </div>
+
+        <!-- Social proof -->
+        <div class="social-card" style="display:none;"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REVIEWS SECTION -->
+  <div style="padding: 40px 0 40px;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <div style="font-family: 'Inter', sans-serif; font-size: clamp(32px, 5vw, 52px); font-weight: 900; letter-spacing: -2px; line-height: 1.05;">
+          <span style="color: var(--text);">Verified Reviews From<br></span>
+          <span style="color: var(--green-bright);">Traders</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button onclick="scrollReviews(-1)" style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg-3); border: 1px solid var(--border-2); color: var(--text-2); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">‹</button>
+        <button onclick="scrollReviews(1)" style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg-3); border: 1px solid var(--border-2); color: var(--text-2); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">›</button>
+      </div>
+    </div>
+
+    <div id="reviews-track" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; overflow: hidden;">
+
+      <div style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 14px; padding: 28px;">
+        <div style="color: var(--green-bright); font-size: 22px; letter-spacing: 3px; margin-bottom: 20px;">★★★★★</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 24px;">"I was completely new to trading and had tried other courses before. The Trading Lab is different — everything is broken down in a way that actually makes sense. I'm now consistently spotting setups I never would have seen before."</div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--green-bright); flex-shrink: 0;">MR</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--text);">Marcus R.</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--green-bright); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 20px; padding: 2px 8px; white-space: nowrap;">Verified Buyer</span>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); margin-top: 2px;">Member · 3 months</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 14px; padding: 28px;">
+        <div style="color: var(--green-bright); font-size: 22px; letter-spacing: 3px; margin-bottom: 20px;">★★★★★</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 24px;">"The risk management module alone was worth the price. I used to blow accounts because I had no structure. Now I have clear rules I follow every single session and my trading has completely changed."</div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--green-bright); flex-shrink: 0;">JL</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--text);">Jamie L.</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--green-bright); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 20px; padding: 2px 8px; white-space: nowrap;">Verified Buyer</span>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); margin-top: 2px;">Member · 5 months</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 14px; padding: 28px;">
+        <div style="color: var(--green-bright); font-size: 22px; letter-spacing: 3px; margin-bottom: 20px;">★★★★★</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 24px;">"Andres keeps everything transparent and doesn't oversell results. The system is simple, repeatable and it actually works. The community is also super active and supportive — best investment I've made in my trading education."</div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--green-bright); flex-shrink: 0;">ST</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--text);">Sofia T.</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--green-bright); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 20px; padding: 2px 8px; white-space: nowrap;">Verified Buyer</span>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); margin-top: 2px;">Member · 2 months</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 14px; padding: 28px;">
+        <div style="color: var(--green-bright); font-size: 22px; letter-spacing: 3px; margin-bottom: 20px;">★★★★★</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 24px;">"I've been trading for two years with no real consistency. After going through The Trading Lab I finally understand why — I had no structured system. This course fixed that. Clear, simple, and genuinely effective."</div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--green-bright); flex-shrink: 0;">DK</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--text);">Daniel K.</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--green-bright); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 20px; padding: 2px 8px; white-space: nowrap;">Verified Buyer</span>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); margin-top: 2px;">Member · 1 month</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 14px; padding: 28px;">
+        <div style="color: var(--green-bright); font-size: 22px; letter-spacing: 3px; margin-bottom: 20px;">★★★★★</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 24px;">"The price action system Andres teaches is something I can actually apply. No complicated indicators, no confusion. Just clean levels and a clear process. I went from losing money every week to finally having green weeks."</div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--green-bright); flex-shrink: 0;">NB</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--text);">Nathan B.</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--green-bright); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 20px; padding: 2px 8px; white-space: nowrap;">Verified Buyer</span>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); margin-top: 2px;">Member · 4 months</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 14px; padding: 28px;">
+        <div style="color: var(--green-bright); font-size: 22px; letter-spacing: 3px; margin-bottom: 20px;">★★★★★</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 24px;">"What I appreciate most is that Andres is honest about what trading actually takes. No get-rich-quick promises, just a real system and a supportive community. I feel more confident in the markets than I ever have."</div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(34,197,94,0.12); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--green-bright); flex-shrink: 0;">AW</div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--text);">Aisha W.</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: var(--green-bright); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 20px; padding: 2px 8px; white-space: nowrap;">Verified Buyer</span>
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); margin-top: 2px;">Member · 6 months</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Animate progress bar on load
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var bar = document.getElementById('pbar');
+      if (bar) bar.style.width = '33%';
+    }, 600);
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+
+  // Reviews pagination
+  var reviewPage = 0;
+  var reviewsPerPage = window.innerWidth < 768 ? 1 : 3;
+  var allReviews = document.querySelectorAll('#reviews-track > div');
+  var totalPages = Math.ceil(allReviews.length / reviewsPerPage);
+
+  function showReviews() {
+    reviewsPerPage = window.innerWidth < 768 ? 1 : 3;
+    totalPages = Math.ceil(allReviews.length / reviewsPerPage);
+    document.getElementById('reviews-track').style.gridTemplateColumns = window.innerWidth < 768 ? '1fr' : 'repeat(3, 1fr)';
+    allReviews.forEach(function(r, i) {
+      var start = reviewPage * reviewsPerPage;
+      r.style.display = (i >= start && i < start + reviewsPerPage) ? 'block' : 'none';
+    });
+  }
+
+  function scrollReviews(dir) {
+    reviewPage = (reviewPage + dir + totalPages) % totalPages;
+    showReviews();
+  }
+
+  showReviews();
+  window.addEventListener('resize', showReviews);
+</script>
+
+</body>
+</html>
