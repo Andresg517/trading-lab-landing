@@ -363,7 +363,7 @@
   /* ─── TWO-COL LAYOUT ─── */
   .two-col {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: 1fr;
     gap: 20px;
     align-items: start;
   }
@@ -375,6 +375,9 @@
     border-radius: var(--radius);
     padding: 24px;
     margin-bottom: 16px;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .section-header {
@@ -603,7 +606,7 @@
 
   .faq-a {
     font-size: 12px;
-    color: var(--text-3);
+    color: #8aaa8a;
     line-height: 1.6;
     max-height: 0;
     overflow: hidden;
@@ -1428,29 +1431,29 @@
           </div>
           <!-- Perks -->
           <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; text-align: left;">
-            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: #ffffff; line-height: 1.5;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               Complete A to Z price action trading system
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: #ffffff; line-height: 1.5;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               Step by step training from beginner to execution
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: #ffffff; line-height: 1.5;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               Private trading community access
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: #ffffff; line-height: 1.5;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               Risk management framework used by profitable traders
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-2); line-height: 1.5;">
+            <div style="display: flex; align-items: flex-start; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; color: #ffffff; line-height: 1.5;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" style="flex-shrink:0; margin-top: 1px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               All future updates included
             </div>
           </div>
           <!-- Quote -->
-          <div style="padding: 0 20px; margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-3); line-height: 1.7; text-align: center;">
+          <div style="padding: 0 20px; margin-bottom: 20px; font-family: 'Inter', sans-serif; font-size: 14px; color: #8aaa8a; line-height: 1.7; text-align: center;">
             Most traders lose thousands learning this the hard way. This program gives you the exact system from day one - so you can skip the costly mistakes and get straight to consistency.
           </div>
           <!-- Button -->
@@ -1512,12 +1515,12 @@
     </div>
 
     <!-- RIGHT COLUMN (STICKY) -->
-    <div>
+    <div style="display: none;">
       <div class="sidebar-sticky">
 
 
         <!-- Price Card -->
-        <div class="price-card" id="enroll">
+        <div class="price-card" id="enroll" style="display: none;">
           <div class="price-header">
             <div class="price-label">Full Access — 3-payment plan</div>
             <div class="price-amount">$999<span>/mo</span></div>
